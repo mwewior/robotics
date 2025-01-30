@@ -1,0 +1,6 @@
+*/.vscode
+lab2/.catkin_tools
+lab2/build
+lab2/devel
+lab2/logs
+my_tree.txt

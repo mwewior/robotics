@@ -1,0 +1,25 @@
+
+<launch>
+
+<node
+    pkg="map_server"
+    type="map_server"
+    name="map_server" 
+    args="$(find stero_mobile_init)/maps/korytarzyk/mapa_korytarzyk.yaml"
+/>
+
+
+<node
+    name="korytarzyktf"
+    pkg="tf"
+    type="static_transform_publisher"
+    args="0 0 0 0 0 0 map odom 100"
+/>
+
+
+<include file="$(find stero_mobile_init)/launch/tiago_korytarzyk.launch">
+    <arg name="world" value="korytarzyk"/>
+</include>
+
+
+</launch>

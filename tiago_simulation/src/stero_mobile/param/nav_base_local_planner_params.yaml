@@ -1,0 +1,32 @@
+# local_planner:
+global_frame_id: map
+
+holonomic_robot: false
+
+max_vel_x: 5.0
+min_vel_x : -1
+max_vel_theta: 6.0
+min_vel_theta: -6.0
+min_in_place_vel_theta: 0.3
+acc_lim_theta: 3.2
+acc_lim_x: 2.5
+acc_lim_y: 0.0
+
+escape_vel: -3
+
+sim_time: 5.0
+
+publish_cost_grid_pc: true
+oscillation_reset_dist: 0.1
+
+xy_goal_tolerance: 0.1
+
+meter_scoring: true
+# pdist_scale: 5.0
+# gdist_scale: 1.0
+# occdist_scale: 0.1
+
+
+heading_lookahead: 0.6
+
+

@@ -1,0 +1,107 @@
+<launch>
+
+    <env name="GAZEBO_MODEL_PATH" value="$(find stero_mobile_init)/models"/>
+
+
+    <arg name="tower" default="tower"/>
+
+    <arg name="mapa" default="mieszkanko"/>
+    <arg name="map_folder" default="$(find stero_mobile_init)/maps/$(arg mapa)"/>
+    <arg name="map_file" default="$(arg map_folder)/mapa_$(arg mapa).yaml"/>
+
+    <arg name="extra_gazebo_args" default="--verbose"/>
+
+    <include file="$(find stero_mobile_init)/launch/tiago_$(arg mapa).launch">
+        <arg name="world" value="$(arg mapa)"/>
+        <arg name="robot"  value="steel"/>
+        <arg name="tuck_arm" value="false"/>
+        <arg name="extra_gazebo_args" value="$(arg extra_gazebo_args)"/>
+    </include>
+
+
+    <!-- <include file="$(find tiago_2dnav_gazebo)/launch/navigation.launch"> -->
+    <!-- <include file="/opt/tiago/share/tiago_2dnav_gazebo/launch/tiago_navigation.launch">
+        <arg name="public_sim" value="true"/>
+        <arg name="lost" value="true"/>
+        <arg name="map" value="$(arg map_folder)"/>
+    </include> -->
+
+    <node
+        name="spawn_objects"
+        pkg="stero_mobile_init"
+        type="spawn_objects.py"
+        output="screen"
+    />
+
+    <node
+        name="tower"
+        pkg="stero_mobile_init"
+        type="tower.py"
+        output="screen"
+    />
+
+    <!-- <node
+        name="$(arg tower)"
+        pkg="stero_mobile_init"
+        type="(arg tower).py"
+        output="screen"
+    /> -->
+
+    <!-- <node
+        name="build_tower"
+        pkg="stero_mobile_init"
+        type="build_tower.py"
+        output="screen"
+    /> -->
+
+    <node
+        pkg="stero_mobile_init"
+        type="navigation" 
+        respawn="false"
+        name="navigation"
+        output="screen">
+
+                            <!-- jak juz sie stworzy ten pliki to będzie trzeba je tak podać -->
+                                    <!--    /param  /   map_param   /   nazwa.yaml     -->
+        <rosparam
+            file="$(find stero_mobile_init)/param/nav_costmap_common_params.yaml"
+            command="load" 
+            ns="global_costmap"
+        /> 
+        <rosparam
+            file="$(find stero_mobile_init)/param/nav_costmap_common_params.yaml"
+            command="load"
+            ns="local_costmap"
+        />
+        <rosparam
+            file="$(find stero_mobile_init)/param/nav_local_costmap_params.yaml"
+            command="load"
+        />
+        <rosparam
+            file="$(find stero_mobile_init)/param/nav_global_costmap_params.yaml"
+            command="load"
+        /> 
+        <rosparam
+            file="$(find stero_mobile_init)/param/nav_base_local_planner_params.yaml"
+            command="load"
+            ns="my_dwa_planner"
+        />
+
+    </node>
+
+
+    <node
+        name="mieszkankotf"
+        pkg="tf"
+        type="static_transform_publisher"
+        args="0 0 0 0 0 0 map odom 100"
+    />
+
+    <node
+        pkg="map_server"
+        type="map_server"
+        name="map_server" 
+        args="$(find stero_mobile_init)/maps/$(arg mapa)/mapa_$(arg mapa).yaml"
+    />
+
+</launch>

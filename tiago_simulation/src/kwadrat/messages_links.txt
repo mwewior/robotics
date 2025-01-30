@@ -1,0 +1,6 @@
+http://wiki.ros.org/twist_mux
+
+http://docs.ros.org/en/api/geometry_msgs/html/msg/Twist.html
+http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Odometry.html
+
+https://www.euclideanspace.com/maths/geometry/rotations/conversions/eulerToQuaternion/steps/index.htm

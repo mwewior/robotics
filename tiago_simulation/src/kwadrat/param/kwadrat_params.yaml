@@ -1,0 +1,14 @@
+clockwise_direction: !!bool false
+# false oznacza ruch przeciwny do wskazówek zegara - prawo
+# true to ruch zgodny z ruchem wskazówek zegara - lewo
+
+trapezoid_mode: !!bool true
+
+length: !!float 3.0
+
+velocity: !!float 1.0
+# min_v = 0.1   max_v = 1.0
+
+acceleration: !!float 0.8
+
+# omega: !!float 1.0

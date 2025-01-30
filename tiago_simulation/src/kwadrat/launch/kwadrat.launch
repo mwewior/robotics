@@ -1,0 +1,28 @@
+<launch>
+
+  <include file="$(find stero_mobile_init)/launch/tiago_simple.launch"/>
+  
+  <node
+    pkg="kwadrat"
+    type="kwadrat"
+    name="kwadrat" 
+    output="screen"
+  />
+
+  <node
+    pkg="kwadrat"
+    type="errorNode"
+    name="errorNode" 
+    output="screen"
+  />
+
+  <node
+    name="rqt_gui"
+    pkg="rqt_gui"
+    type="rqt_gui"
+    output="screen"
+  />
+
+  <rosparam file="$(find kwadrat)/param/kwadrat_params.yaml" />
+
+</launch>

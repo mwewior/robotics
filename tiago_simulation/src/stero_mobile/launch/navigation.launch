@@ -1,0 +1,63 @@
+<launch>
+    <arg name="map_file" default="$(find stero_mobile_init)/maps/mieszkanko/mapa_mieszkanko.yaml"/>
+
+    <include file="$(find stero_mobile_init)/launch/tiago_mieszkanko.launch">
+        <arg name="world" value="mieszkanko"/>
+    </include>
+
+    <node
+        pkg="map_server"
+        type="map_server"
+        name="map_server" 
+        args="$(find stero_mobile_init)/maps/mieszkanko/mapa_mieszkanko.yaml"
+    />
+
+    <!-- <include file="$(find amcl)/examples/amcl_diff.launch" /> -->
+
+    <node
+        pkg="stero_mobile_init"
+        type="navigation" 
+        respawn="false"
+        name="navigation"
+        output="screen">
+
+                            <!-- jak juz sie stworzy ten pliki to będzie trzeba je tak podać -->
+                                    <!--    /param  /   map_param   /   nazwa.yaml     -->
+        <rosparam
+            file="$(find stero_mobile_init)/param/nav_costmap_common_params.yaml"
+            command="load" 
+            ns="global_costmap"
+        /> 
+        <rosparam
+            file="$(find stero_mobile_init)/param/nav_costmap_common_params.yaml"
+            command="load"
+            ns="local_costmap"
+        />
+        <rosparam
+            file="$(find stero_mobile_init)/param/nav_local_costmap_params.yaml"
+            command="load"
+        />
+        <rosparam
+            file="$(find stero_mobile_init)/param/nav_global_costmap_params.yaml"
+            command="load"
+        /> 
+        <rosparam
+            file="$(find stero_mobile_init)/param/nav_base_local_planner_params.yaml"
+            command="load"
+            ns="my_dwa_planner"
+        />
+
+    </node>
+
+
+    <node
+        name="mieszkankotf"
+        pkg="tf"
+        type="static_transform_publisher"
+        args="0 0 0 0 0 0 map odom 100"
+    />
+
+    <!-- <node name="labirynttrans" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 map odom 100"/> -->
+    <!-- <param name="sensor_param" value="param_value" /> -->
+
+</launch> 
